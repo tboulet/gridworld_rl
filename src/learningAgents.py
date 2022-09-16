@@ -16,7 +16,7 @@ from src.game import Directions, Agent, Actions
 import src.util as util
 import random,time
 
-class ValueEstimationAgent(Agent):
+class ValueBasedAgent(Agent):
     """
       Abstract agent which assigns values to (state,action)
       Q-Values for an environment. As well as a value to a
@@ -84,7 +84,7 @@ class ValueEstimationAgent(Agent):
         """
         util.raiseNotDefined()
 
-class ReinforcementAgent(ValueEstimationAgent):
+class ModelBasedValueBasedAgent(ValueBasedAgent):
     """
       Abstract Reinforcemnt Agent: A ValueEstimationAgent
             which estimates Q-Values (as well as policies) from experience
@@ -179,80 +179,3 @@ class ReinforcementAgent(ValueEstimationAgent):
         self.epsilon = float(epsilon)
         self.alpha = float(alpha)
         self.discount = float(gamma)
-
-    ################################
-    # Controls needed for Crawler  #
-    ################################
-    def setEpsilon(self, epsilon):
-        self.epsilon = epsilon
-
-    def setLearningRate(self, alpha):
-        self.alpha = alpha
-
-    def setDiscount(self, discount):
-        self.discount = discount
-
-    def doAction(self,state,action):
-        """
-            Called by inherited class when
-            an action is taken in a state
-        """
-        self.lastState = state
-        self.lastAction = action
-
-    ###################
-    # Pacman Specific #
-    ###################
-    def observationFunction(self, state):
-        """
-            This is where we ended up after our last action.
-            The simulation should somehow ensure this is called
-        """
-        if not self.lastState is None:
-            reward = state.getScore() - self.lastState.getScore()
-            self.observeTransition(self.lastState, self.lastAction, state, reward)
-        return state
-
-    def registerInitialState(self, state):
-        self.startEpisode()
-        if self.episodesSoFar == 0:
-            print('Beginning %d episodes of Training' % (self.numTraining))
-
-    def final(self, state):
-        """
-          Called by Pacman game at the terminal state
-        """
-        deltaReward = state.getScore() - self.lastState.getScore()
-        self.observeTransition(self.lastState, self.lastAction, state, deltaReward)
-        self.stopEpisode()
-
-        # Make sure we have this var
-        if not 'episodeStartTime' in self.__dict__:
-            self.episodeStartTime = time.time()
-        if not 'lastWindowAccumRewards' in self.__dict__:
-            self.lastWindowAccumRewards = 0.0
-        self.lastWindowAccumRewards += state.getScore()
-
-        NUM_EPS_UPDATE = 100
-        if self.episodesSoFar % NUM_EPS_UPDATE == 0:
-            print('Reinforcement Learning Status:')
-            windowAvg = self.lastWindowAccumRewards / float(NUM_EPS_UPDATE)
-            if self.episodesSoFar <= self.numTraining:
-                trainAvg = self.accumTrainRewards / float(self.episodesSoFar)
-                print('\tCompleted %d out of %d training episodes' % (
-                       self.episodesSoFar,self.numTraining))
-                print('\tAverage Rewards over all training: %.2f' % (
-                        trainAvg))
-            else:
-                testAvg = float(self.accumTestRewards) / (self.episodesSoFar - self.numTraining)
-                print('\tCompleted %d test episodes' % (self.episodesSoFar - self.numTraining))
-                print('\tAverage Rewards over testing: %.2f' % testAvg)
-            print('\tAverage Rewards for last %d episodes: %.2f'  % (
-                    NUM_EPS_UPDATE,windowAvg))
-            print('\tEpisode took %.2f seconds' % (time.time() - self.episodeStartTime))
-            self.lastWindowAccumRewards = 0.0
-            self.episodeStartTime = time.time()
-
-        if self.episodesSoFar == self.numTraining:
-            msg = 'Training Done (turning off epsilon and alpha)'
-            print('%s\n%s' % (msg,'-' * len(msg)))

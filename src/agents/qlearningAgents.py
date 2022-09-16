@@ -13,8 +13,8 @@
 
 
 from src.game import *
-from src.learningAgents import ReinforcementAgent
-from src.featureExtractors import *
+from src.learningAgents import ModelBasedValueBasedAgent
+# from trash.featureExtractors import *
 # from backend import ReplayMemory
 
 # import nn
@@ -27,7 +27,7 @@ import random,math
 import numpy as np
 import copy
 
-class QLearningAgent(ReinforcementAgent):
+class QLearningAgent(ModelBasedValueBasedAgent):
     """
       Q-Learning Agent
       Functions you should fill in:
@@ -46,7 +46,7 @@ class QLearningAgent(ReinforcementAgent):
     """
     def __init__(self, **args):
         "You can initialize Q-values here..."
-        ReinforcementAgent.__init__(self, **args)
+        ModelBasedValueBasedAgent.__init__(self, **args)
 
         "*** YOUR CODE HERE ***"
         self.q_values = {}
@@ -132,3 +132,14 @@ class QLearningAgent(ReinforcementAgent):
     def getValue(self, state):
         return self.computeValueFromQValues(state)
 
+
+
+
+def qlearning_agent_factory(mdp, opts):
+    actionFn = lambda state: mdp.getPossibleActions(state)
+    qLearnOpts = {'gamma': opts.discount,
+                  'alpha': opts.learningRate,
+                  'epsilon': opts.epsilon,
+                  'actionFn': actionFn}
+    agent = QLearningAgent(**qLearnOpts)
+    return agent

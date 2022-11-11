@@ -1,12 +1,11 @@
 # ENV
 from tp.gridworld_environnement import Env
-from tp.gridworld_environnement import parseOptions
+from parser import parseOptions
 # AGENT
 from tp.agents.agent import Agent
 from tp.implemented_agents import agents_map
 # PYTHON
 import gym
-from argparse import ArgumentParser
 
 
 
@@ -39,16 +38,15 @@ def train(agent : Agent, env : gym.Env, verbose : int = 1):
 
 if __name__ == "__main__":
     
-    # Get args
-    parser = ArgumentParser(description="Run a reinforcement learning agent")
-    parser.add_argument("--agent", type=str, required=True, help="Agent to run")
-    args = parser.parse_args()
-    agent_name = args.agent
-
+    # Parse options
+    options = parseOptions()
+    
     # Create the environnement
-    env_options = parseOptions()
-    env = Env(env_options)
+    env = Env(options)
+    
     # Create the agent
+    agent_name = options.agent
     agent = agents_map[agent_name](env)
-    # Run the agent
+    
+    # Train the agent
     train(agent, env)

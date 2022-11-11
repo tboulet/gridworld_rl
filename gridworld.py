@@ -191,7 +191,7 @@ if __name__ == '__main__':
     # GET THE AGENT
     ###########################
 
-    from agents import agents_factory_map
+    from src.implemented_agents import agents_factory_map
 
     if opts.agent not in agents_factory_map:
         if opts.manual:

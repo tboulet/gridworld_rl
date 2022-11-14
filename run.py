@@ -11,7 +11,7 @@ import gym
 
 N_EPISODES = 100
 
-def train(agent : Agent, env : gym.Env, verbose : int = 1):
+def train(agent : Agent, env : Env, verbose : int = 1):
 
     for episode in range(N_EPISODES):
         print(f"Episode {episode} starts.")

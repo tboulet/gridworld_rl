@@ -1,3 +1,9 @@
+# ------------
+# Attribution Information: The code used is partially extracted and adapted from the Pacman AI projects.
+# The Pacman AI projects were developed at UC Berkeley for the CS188 Intro to AI course.
+# Link to the original Berkeley course and Pacman Projects: http://ai.berkeley.edu.
+# ------------
+
 import sys
 import optparse
 

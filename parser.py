@@ -8,18 +8,7 @@ def parseOptions():
     optParser.add_option('-a', '--agent',action='store',
                          type='string',dest='agent',default='random',
                          help='Agent to run')
-    optParser.add_option('-e', '--epsilon',action='store',
-                         type='float',dest='epsilon',default=0.3,
-                         metavar="E", help='Chance of taking a random action in q-learning (default %default)')
-    optParser.add_option('-l', '--learningRate',action='store',
-                         type='float',dest='learningRate',default=0.5,
-                         metavar="P", help='TD learning rate (default %default)' )
-    optParser.add_option('-d', '--discount',action='store',
-                         type='float',dest='discount',default=0.9,
-                         help='Discount on future (default %default)')
-    optParser.add_option('-m', '--manual',action='store_true',
-                         dest='manual',default=False,
-                         help='Manually control agent')
+
     # Env parameters
     optParser.add_option('-g', '--grid',action='store',
                          metavar="G", type='string',dest='grid',default="book",
@@ -28,15 +17,10 @@ def parseOptions():
                          type='float',dest='livingReward',default=0.0,
                          metavar="R", help='Reward for living for a time step (default %default)')
     optParser.add_option('-n', '--noise',action='store',
-                         type='float',dest='noise',default=0.2,
+                         type='float',dest='noise',default=0.0,
                          metavar="P", help='How often action results in ' +
                          'unintended direction (default %default)' )
-    
-    # Training parameters
-    optParser.add_option('-k', '--episodes',action='store',
-                         type='int',dest='episodes',default=1,
-                         metavar="K", help='Number of epsiodes of the MDP to run (default %default)')
-    
+        
     # Graphics
     optParser.add_option('-w', '--windowSize', metavar="X", type='int',dest='gridSize',default=150,
                          help='Request a window width of X pixels *per grid cell* (default %default)')
@@ -60,7 +44,5 @@ def parseOptions():
         opts.pause = False
         # opts.manual = False
 
-    if opts.manual:
-        opts.pause = True
 
     return opts

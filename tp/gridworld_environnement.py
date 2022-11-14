@@ -1,7 +1,7 @@
 # gridworld_environnement.py
 # ------------
 # Attribution Information: The code used is partially extracted and adapted from the Pacman AI projects.
-# The Pacman AI projects were developed at UC Berkeley.
+# The Pacman AI projects were developed at UC Berkeley for the CS188 Intro to AI course.
 # Link to the original Berkeley course and Pacman Projects: http://ai.berkeley.edu.
 # ------------
 
@@ -65,9 +65,9 @@ class Env(gym.Env):
             
             # For value based agents, we display the V or Q values
             if isinstance(agent, ValueBasedAgent): 
-                if "getQValues" in dir(agent):
+                if "getQValue" in dir(agent):
                     self.display.displayQValues(agent, state, "CURRENT Q-VALUES")
-                elif "getValues" in dir(agent):
+                elif "getValue" in dir(agent):
                     self.display.displayValues(agent, state, "CURRENT VALUES")
                 else:
                     print("WARNING : agent has no getQValues or getValues method in spite being a ValueBasedAgent")

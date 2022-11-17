@@ -87,7 +87,7 @@ class ValueBasedAgent(Agent):
 class ModelBasedValueBasedAgent(ValueBasedAgent):
     """
       Abstract Reinforcemnt Agent: A ValueEstimationAgent
-            which estimates Q-Values (as well as policies) from experience
+            which estimates Q-Values (as well as src.policies) from experience
             rather than a model
 
         What you need to know:

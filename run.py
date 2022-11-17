@@ -1,6 +1,6 @@
 # ENV
 from tp.gridworld_environnement import Env
-from parser import parseOptions
+from tp.parser import parseOptions
 # AGENT
 from tp.agents.agent import Agent
 from tp.implemented_agents import agents_map

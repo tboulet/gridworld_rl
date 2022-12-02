@@ -165,7 +165,7 @@ if __name__ == '__main__':
     # GET THE GRIDWORLD
     ###########################
 
-    import gridworld
+    import src.run_gridworld as run_gridworld
     from grids import getGrid
     mdp = getGrid(opts.grid)
     mdp.setLivingReward(opts.livingReward)

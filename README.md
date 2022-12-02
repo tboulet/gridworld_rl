@@ -1,6 +1,9 @@
 # Practical work / Travaux pratiques : Gridworld RL
 This project implements a simple yet rich and variable gridworld environment for reinforcement learning, as well as tabular agents such as Q-learning and SARSA. 
 
+<p align="center">
+  <img src="assets/env_render.png" alt="Q values through training" width="60%"/>
+</p>
 
 # The environnement
 

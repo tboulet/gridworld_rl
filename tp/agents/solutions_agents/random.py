@@ -3,7 +3,7 @@ from random import choice
 
 
 
-class RandomAgent(Agent):
+class RandomAgentSolution(Agent):
     def act(self, state, training = None):
         return choice(self.get_possible_actions(state))
 

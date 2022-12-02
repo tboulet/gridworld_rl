@@ -1,9 +1,15 @@
-from tp.agents.agent import Agent, ValueBasedAgent, policies, greedy_policy, epsilon_greedy_policy, random_policy, boltzmann_policy
-from random import choice, random
+from tp.agents.agent import (
+    Agent, ValueBasedAgent, policies, 
+    greedy_policy, 
+    epsilon_greedy_policy, 
+    random_policy, 
+    boltzmann_policy, 
+    manual_policy
+    )
 
 
 
-class SarsaAgent(ValueBasedAgent):
+class QLearningAgentSolution(ValueBasedAgent):
     def __init__(self, env, **kwargs):
         super().__init__(env, **kwargs)
         # Hyperparameters
@@ -15,7 +21,6 @@ class SarsaAgent(ValueBasedAgent):
         # Other
         self.QValues = {}
         self.last_transition : tuple = None
-        self.transition : tuple = None
 
         
     def act(self, state, training = None):
@@ -29,32 +34,28 @@ class SarsaAgent(ValueBasedAgent):
             return random_policy(actions)
         elif self.behaviour_policy == "boltzmann":
             return boltzmann_policy(self.QValues, state, actions, temperature=0.1)
+        elif self.behaviour_policy == "manual":
+            return manual_policy(actions)
         else:
-            raise Exception(f"Policy {self.behaviour_policy} not implemented for SARSA.")
+            raise Exception(f"Policy {self.behaviour_policy} not implemented.")
     
     
     def observe(self, state, action, reward, next_state, done):
         self.observe_state(state)
         self.observe_state(next_state)
-        # Save transition
-        self.last_transition = self.transition
-        self.transition = (state, action, reward, next_state, done)
+        # Save observed transition
+        self.last_transition = (state, action, reward, next_state, done)
 
 
     def learn(self):
         
-        # Pass learning for first transition.
-        if self.transition is None or self.last_transition is None:
-            return
+        if self.last_transition is None:
+            raise Exception("No transition to learn from. You called learn() before observe().")
         
         state, action, reward, next_state, done = self.last_transition
-        next_state, next_action, next_reward, next_next_state, next_done = self.transition
         
         if not done:
-            # self.observe_state(next_state)
-            # next_action = self.act(next_state) # We compute the next action from the current policy. We could also implement this by waiting for next action to be observed but a bit more complicated to implement.
-            next_action = next_action
-            target = reward + self.gamma * self.QValues[next_state][next_action]
+            target = reward + self.gamma * max(self.QValues[next_state].values())
         else:
             target = reward
         

@@ -3,21 +3,20 @@ from random import choice, random
 
 
 
-class MonteCarloAgent(ValueBasedAgent):
+class SarsaAgentSolution(ValueBasedAgent):
     def __init__(self, env, **kwargs):
         super().__init__(env, **kwargs)
         # Hyperparameters
         self.gamma = 0.9
-        self.epsilon = 0.5
+        self.epsilon = 0.1
         self.learning_rate = 0.1
-        self.behaviour_policy = "epsilon_greedy"
+        self.behaviour_policy = "boltzmann"
         assert self.behaviour_policy in policies.keys(), f"Policy {self.behaviour_policy} not implemented : not in {policies.keys()}."
         # Other
         self.QValues = {}
-        self.timesteps_to_states_actions = {} # mapping from timestep to tuple of (state, action)
-        self.timesteps_to_rewards = {} # mapping from timestep to reward
-        self.timestep = 0
-        self.is_done = False
+        self.last_transition : tuple = None
+        self.transition : tuple = None
+
         
     def act(self, state, training = None):
         self.observe_state(state)
@@ -29,31 +28,38 @@ class MonteCarloAgent(ValueBasedAgent):
         elif self.behaviour_policy == "random":
             return random_policy(actions)
         elif self.behaviour_policy == "boltzmann":
-            return boltzmann_policy(self.QValues, state, actions, temperature=1)
+            return boltzmann_policy(self.QValues, state, actions, temperature=0.1)
         else:
             raise Exception(f"Policy {self.behaviour_policy} not implemented for SARSA.")
     
     
     def observe(self, state, action, reward, next_state, done):
-        self.is_done = done
         self.observe_state(state)
         self.observe_state(next_state)
-        self.timesteps_to_rewards[self.timestep] = reward
-        self.timesteps_to_states_actions[self.timestep] = (state, action)
+        # Save transition
+        self.last_transition = self.transition
+        self.transition = (state, action, reward, next_state, done)
 
 
     def learn(self):
-        if self.is_done:
-            future_reward = 0
-            for t in range(self.timestep, -1, -1):
-                state, action = self.timesteps_to_states_actions[t]
-                reward = self.timesteps_to_rewards[t]
-                future_reward = reward + self.gamma * future_reward
-                self.QValues[state][action] += self.learning_rate * (future_reward - self.QValues[state][action])
-            self.reset_episode()
+        
+        # Pass learning for first transition.
+        if self.transition is None or self.last_transition is None:
+            return
+        
+        state, action, reward, next_state, done = self.last_transition
+        next_state, next_action, next_reward, next_next_state, next_done = self.transition
+        
+        if not done:
+            # self.observe_state(next_state)
+            # next_action = self.act(next_state) # We compute the next action from the current policy. We could also implement this by waiting for next action to be observed but a bit more complicated to implement.
+            next_action = next_action
+            target = reward + self.gamma * self.QValues[next_state][next_action]
         else:
-            self.timestep += 1
-            
+            target = reward
+        
+        self.QValues[state][action] += self.learning_rate * (target - self.QValues[state][action])
+        
         
     ### getQValues for vizualisation
     def getQValue(self, state, action):
@@ -72,9 +78,4 @@ class MonteCarloAgent(ValueBasedAgent):
         """
         if state not in self.QValues:
             self.QValues[state] = {action : 0 for action in self.get_possible_actions(state)}
-    
-    def reset_episode(self):
-        self.timesteps_to_states_actions = {}
-        self.timesteps_to_rewards = {}
-        self.timestep = 0
-        self.is_done = False
+        

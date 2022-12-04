@@ -57,7 +57,7 @@ A dense reward is also possibly given when the livingReward argument is set to a
 
 For creating an agent (e.g. a random agent), you must:
 
-- Create a class that inherits from `Agent` (in tp/agents/agent.py), e.g. `RandomAgent`
+- Create a class that inherits from `Agent` (in tp/agent.py), e.g. `RandomAgent`
 
 - Implement the methods act(), observe() and learn() (see the docstrings for more information)
 

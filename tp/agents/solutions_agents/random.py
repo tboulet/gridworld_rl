@@ -1,4 +1,4 @@
-from tp.agents.agent import Agent
+from tp.agent import Agent
 from random import choice
 
 

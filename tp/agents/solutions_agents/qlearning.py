@@ -1,4 +1,4 @@
-from tp.agents.agent import (
+from tp.agent import (
     Agent, ValueBasedAgent, policies, 
     greedy_policy, 
     epsilon_greedy_policy, 

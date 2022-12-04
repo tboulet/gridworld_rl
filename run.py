@@ -2,11 +2,8 @@
 from tp.gridworld_environnement import Env
 from tp.parser import parseOptions
 # AGENT
-from tp.agents.agent import Agent
+from tp.agent import Agent
 from tp.implemented_agents import agents_map
-# PYTHON
-import gym
-
 
 
 N_EPISODES = 100

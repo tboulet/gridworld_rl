@@ -3,7 +3,6 @@ import src.graphicsUtils as graphicsUtils
 
 # RL TP
 from tp.utils import Action, State
-import gym
 
 # PYTHON
 from abc import ABC, abstractmethod
@@ -19,7 +18,7 @@ class Agent(ABC):
     Base class for all of our model-based agents. 
     An agent is an object that can interact with an environment and learn from it.
     """
-    def __init__(self, env : gym.Env, **kwargs):
+    def __init__(self, env, **kwargs):
         self.env = env
 
     @abstractmethod
@@ -145,7 +144,7 @@ policies = {
     "greedy" : greedy_policy,
     "epsilon_greedy" : epsilon_greedy_policy,
     "boltzmann" : boltzmann_policy,
-    # "upper_confidence_bound" : upper_confidence_bound_policy,
+    "upper_confidence_bound" : upper_confidence_bound_policy,
     "random" : random_policy,
     "manual" : manual_policy,
 }

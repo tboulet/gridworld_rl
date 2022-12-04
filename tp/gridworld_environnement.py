@@ -12,15 +12,14 @@ import src.graphicsGridworldDisplay as graphicsGridworldDisplay
 from tp.environnement.helper import *
 from grids import getGrid
 # AGENT
-from tp.agents.agent import Agent, ValueBasedAgent, PolicyBasedAgent
+from tp.agent import Agent, ValueBasedAgent, PolicyBasedAgent
 # PYTHON
 from tp.utils import State, Action
 import sys
 from typing import Any, Tuple
-import gym
 
 
-class Env(gym.Env):
+class Env():
     """
     The environment class. It contains the methods reset(), step() and render().
     """
@@ -67,10 +66,8 @@ class Env(gym.Env):
             if isinstance(agent, ValueBasedAgent): 
                 if "getQValue" in dir(agent):
                     self.display.displayQValues(agent, state, "CURRENT Q-VALUES")
-                elif "getValue" in dir(agent):
-                    self.display.displayValues(agent, state, "CURRENT VALUES")
                 else:
-                    print("WARNING : agent has no getQValues or getValues method in spite being a ValueBasedAgent")
+                    print("WARNING : agent has no getQValues method in spite being a ValueBasedAgent")
             
             # For policy based agents, we display the probs
             elif isinstance(agent, PolicyBasedAgent):

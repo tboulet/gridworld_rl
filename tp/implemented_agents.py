@@ -1,12 +1,12 @@
-from tp.agents.solutions_agents.random import RandomAgentSolution
-from tp.agents.solutions_agents.sarsa import SarsaAgentSolution
-from tp.agents.solutions_agents.qlearning import QLearningAgentSolution
-from tp.agents.solutions_agents.montecarlo import MonteCarloAgentSolution
+from tp.agents.random import RandomAgent
+from tp.agents.sarsa import SarsaAgent
+from tp.agents.qlearning import QLearningAgent
+from tp.agents.montecarlo import MonteCarloAgent
 
 agents_map = {
-    "_random": RandomAgentSolution,
-    "_sarsa" : SarsaAgentSolution,
-    "_qlearning" : QLearningAgentSolution,
-    "_mc" : MonteCarloAgentSolution
+    "random": RandomAgent,
+    "sarsa" : SarsaAgent,
+    "qlearning" : QLearningAgent,
+    "mc" : MonteCarloAgent
 
 }

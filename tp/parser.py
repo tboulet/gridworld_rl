@@ -6,7 +6,7 @@ def parseOptions():
     
     # Agent
     optParser.add_option('-a', '--agent',action='store',
-                         type='string',dest='agent',default='_random',
+                         type='string',dest='agent',default='random',
                          help='Agent to run')
 
     # Env parameters

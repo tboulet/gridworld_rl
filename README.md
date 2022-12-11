@@ -53,9 +53,27 @@ A dense reward is also possibly given when the livingReward argument is set to a
 
 
 
-# Create your own agents
+# Agents
 
-For creating an agent (e.g. a random agent), you must:
+Agents are object able to act, observe transitions, and learn. For running an agent in an environnement, use the --agent argument this way :
+
+```bash
+python run.py --agent <agent_name>
+```
+
+With agent_name being the name of an implemented agent. Agents currently implemented are :
+
+| Agents      | Description            | name |
+| -----------       | -----------       | ----------- | 
+| Random Agent      | Random actions | random |
+| SARSA              | Use the SARSA estimator of the Q value | sarsa |
+| Q-Learning        | Use the Q Learning estimator of the Q value | qlearning|
+| Monte Carlo         | Learn from the return|mc|
+
+
+## Creating your own agents :
+
+You can also create your own agents. For creating an agent (e.g. a random agent), you must:
 
 - Create a class that inherits from `Agent` (in tp/agent.py), e.g. `RandomAgent`
 

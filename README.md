@@ -5,9 +5,17 @@ This project implements a simple yet rich and variable gridworld environment for
   <img src="assets/env_render.png" alt="Q values through training" width="60%"/>
 </p>
 
+# Installation
+Clone the project with the following command:
+
+    git clone git@github.com:tboulet/gridworld_rl.git
+
+You will also need to have numpy and tkinter installed.  
+
+
 # The environnement
 
-The environnement is a gridworld with a start and an end. The agent can move in 4 directions (up, down, left, right) and can only move on the grid. Its objective is to reach a positively rewarding end state.
+The environnement is a gridworld with a start and an end states. The agent can move in 4 directions (up, down, left, right) and can only move on the grid. Its objective is to reach a positively rewarding end state.
 
 Run this command to see a random agent moving in the gridworld:
 

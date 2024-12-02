@@ -6,11 +6,13 @@ This project implements a simple yet rich and variable gridworld environment for
 </p>
 
 # Installation
-Clone the project with the following command:
+Clone the TP branch of the repository with the following command:
 
-    git clone git@github.com:tboulet/gridworld_rl.git
+    git clone -b tp git@github.com:tboulet/gridworld_rl.git
 
-You will also need to have numpy and tkinter installed.  
+Don't clone the master branch as it contains the final solution of the TP.
+
+You will also need to have numpy installed.  
 
 
 # The environnement

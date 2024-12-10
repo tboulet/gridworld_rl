@@ -10,4 +10,4 @@ from tp.agent import (
 
 class QLearningAgent(ValueBasedAgent):
     # This is an empty agent that you need to implement
-    raise NotImplementedError("QLearningAgent not implemented")
+    pass
